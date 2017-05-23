@@ -55,5 +55,50 @@ This is another good question on data structures. There are many algorithms to r
 
 You can implement Stack by using array or linked list. This question expect you to implement standard method provided by stack data structure e.g. push() and pop().  Both push() and pop() should be happen at top of stack, which you need to keep track. It’s also good if you can implement utility methods like contains(), isEmpty() etc. By the way JDK has java.util.Stack class and you can check it’s code to get an idea. 
 
+### Question 16: How do you reverse a linked list?
+
+```
+public ListNode Reverse(ListNode list) {
+    if (list == null) return null; // first question
+
+    if (list.next == null) return list; // second question
+
+    // third question - in Lisp this is easy, but we don't have cons
+    // so we grab the second element (which will be the last after we reverse it)
+
+    ListNode secondElem = list.next;
+
+    // bug fix - need to unlink list from the rest or you will get a cycle
+    list.next = null;
+
+    // then we reverse everything from the second element on
+    ListNode reverseRest = Reverse(secondElem);
+
+    // then we join the two lists
+    secondElem.Next = list;
+
+    return reverseRest;
+}
+```
+### OR
+
+```
+This should reverse a singly linked list, called with reverse(head,NULL); so if this were your list:
+//Takes as parameters a node in a linked list, and p, the previous node in that list
+    //returns the head of the new list
+    
+    Node reverse(Node n,Node p){   
+        if(n==null) return null;
+        if(n.next==null){ //if this is the end of the list, then this is the new head
+            n.next=p;
+            return n;
+        }
+        Node r=reverse(n.next,n);  //call reverse for the next node, 
+                                      //using yourself as the previous node
+        n.next=p;                     //Set your next node to be the previous node 
+        return r;                     //Return the head of the new list
+    }  
+```
+
 
 Read more: http://javarevisited.blogspot.com/2013/03/top-15-data-structures-algorithm-interview-questions-answers-java-programming.html#ixzz4hvjEVHhK
